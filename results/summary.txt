@@ -1,0 +1,8 @@
+lattices: 2x2, 2x3, 2x4
+exact-gs estimate vs exact, max relative error: 5.71e-05
+commutator bound step ratio range: 2.06 to 4.13
+||E|| step ratio range: 1.74 to 3.98
+free_fermion: max |err| standard 2.691, c_half 0.505, formA 0.695, formB 0.999, in interval 8/12
+neel: max |err| standard 10.144, c_half 1.786, formA 1.000, formB 4.572, in interval 9/12
+gutzwiller: max |err| standard 0.428, c_half 0.094, formA 0.243, formB 0.201, in interval 10/12
+log-log correlation of |r|/48 with |c_half error| over 36 cases: 0.86

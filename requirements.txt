@@ -1,0 +1,8 @@
+# Tested with Python 3.14.0
+pennylane==0.45.1
+pennylane_lightning==0.45.0
+jax==0.11.2        # imported by pennylane.labs at load time
+jaxlib==0.11.2
+numpy==2.5.3
+scipy==1.18.1
+matplotlib==3.11.2
