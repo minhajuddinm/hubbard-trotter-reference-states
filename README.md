@@ -16,7 +16,7 @@ For the split $H = T + V$ (hopping and on-site interaction) and $U_2(\delta t) =
 | family of forms | $c_\lambda = -[\lambda A + (1-\lambda)B]/24$ with $A = \langle[V,[V,T]]\rangle$, $B = \langle[T,[T,V]]\rangle$; all members agree on eigenstates, and the standard form is $\lambda = -1$ |
 | residual check | $r = \langle[H,[T,V]]\rangle = B - A$, zero on eigenstates; $c_{1/2} \pm \lvert r\rvert/48$ |
 
-Reference states: exact ground state, free-fermion ground state of $T$, Néel state, variational Gutzwiller state, and one random state as a baseline.
+Reference states: exact ground state, free-fermion ground state of $T$, Néel state, variational Gutzwiller state, collinear unrestricted Hartree–Fock (UHF) determinant, and one random state as a baseline.
 
 ## Main results
 
@@ -28,11 +28,15 @@ All numbers below come from `results/summary.txt`, which `code/make_figures.py` 
 | Commutator bound / $\lVert\mathcal{E}\rVert$, as a step-count ratio | 2.1–4.1 / 1.7–4.0 |
 | Free-fermion state, standard form | wrong sign in 12 of 12 cases |
 | Gutzwiller state, standard form / $c_{1/2}$ | up to 43% / up to 9% relative error |
-| Correlation of $\lvert r\rvert/48$ with the error of $c_{1/2}$ | 0.86 (log–log, 36 cases) |
+| UHF state, standard form | below the exact value in 12 of 12 cases |
+| Correlation of $\lvert r\rvert/48$ with the error of $c_{1/2}$ | 0.86 (log–log, 36 free-fermion, Néel and Gutzwiller cases) |
+| Same, including UHF | 0.68 (48 cases): the self-consistent UHF state keeps $\lvert r\rvert$ small (Brillouin's theorem) while $c_{1/2}$ is up to 59% off |
 
-![Signed relative error of the standard form](figures/fig3_sensitivity.png)
+![Standard form relative to the exact coefficient](figures/fig3_sensitivity.png)
 
-![Family of forms and the residual check](figures/fig4_family.png)
+![Family of forms](figures/fig4_family.png)
+
+![Residual check against the actual error](figures/fig5_check.png)
 
 ## Reproduce
 
@@ -49,7 +53,6 @@ python -u run_sweep.py --lattice 2 3   # about 6 s
 python -u run_sweep.py --lattice 2 4   # about 3 min, peak about 2 GB
 python validate.py                     # dense cross-check of 2x2 and 2x3
 python make_figures.py                 # figures/ and results/summary.txt, results/tables.tex
-python make_fig1.py                    # schematic (Fig. 1)
 ```
 
 `pennylane.labs` is experimental, so the versions in `requirements.txt` are pinned. Every PennyLane value is checked against an explicit expectation value on every run (they agree to below $10^{-13}$).
@@ -58,10 +61,10 @@ python make_fig1.py                    # schematic (Fig. 1)
 
 | Path | Contents |
 |---|---|
-| `code/common.py` | Hamiltonian, symmetry sector, reference states, error operator, PennyLane call, T-gate count |
+| `code/common.py` | Hamiltonian, symmetry sector, reference states (including UHF), error operator, PennyLane call, T-gate count |
 | `code/run_sweep.py` | the sweep; writes `results/sweep_<lattice>.csv` after each $U/t$ |
 | `code/validate.py` | independent dense recomputation of $c_{\mathrm{exact}}$, $A$ and $B$ for 2x2 and 2x3 |
-| `code/make_figures.py`, `code/make_fig1.py` | figures and table rows |
+| `code/make_figures.py` | Figs. 2–5 and table rows (Fig. 1 is drawn in TikZ in the paper) |
 | `results/sweep_*.csv` | one row per (lattice, $U/t$, reference state) |
 | `results/sweep_*.log` | console output of each run |
 | `figures/` | PDF figures for the paper and PNG copies |
