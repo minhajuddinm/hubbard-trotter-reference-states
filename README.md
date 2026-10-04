@@ -63,6 +63,7 @@ python make_figures.py                 # figures/ and results/summary.txt, resul
 |---|---|
 | `code/common.py` | Hamiltonian, symmetry sector, reference states (including UHF), error operator, PennyLane call, T-gate count |
 | `code/run_sweep.py` | the sweep; writes `results/sweep_<lattice>.csv` after each $U/t$ |
+| `code/pennylane_convention_repro.py` | minimal check of the return convention of `perturbation_error` (returns `i t <H_eff - H>`) |
 | `code/validate.py` | independent dense recomputation of $c_{\mathrm{exact}}$, $A$ and $B$ for 2x2 and 2x3 |
 | `code/make_figures.py` | Figs. 2–5 and table rows (Fig. 1 is drawn in TikZ in the paper) |
 | `results/sweep_*.csv` | one row per (lattice, $U/t$, reference state) |
