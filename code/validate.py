@@ -22,6 +22,9 @@ from common import (
     gutzwiller_state,
     hubbard_parts,
     neel_state,
+    one_body_hopping,
+    slater_state,
+    uhf_orbitals,
     random_state,
     restrict,
     sector_indices,
@@ -48,7 +51,9 @@ def check(lattice):
         c_exact = exact_energy_shift(t, v, e0, psi0, 0.005) / 0.005**2
         psi_free = np.linalg.eigh(t + 1e-3 * v)[1][:, 0]
         psi_gw = gutzwiller_state(psi_free, d_occ, h, np.linspace(0.02, 1.0, 50))[0]
+        orb_a, orb_b, _, _ = uhf_orbitals(one_body_hopping(T, n_sites), u, n_sites // 2, n_sites - n_sites // 2)
         states = {"exact_gs": psi0, "free_fermion": psi_free, "gutzwiller": psi_gw,
+                  "uhf": slater_state(orb_a, orb_b, idx, n_sites),
                   "neel": neel_state((lx, ly), idx, nq), "random_s7": random_state(len(idx), 7)}
         a_op, b_op = comm(v, comm(v, t)), comm(t, comm(t, v))
         for r in (r for r in rows if float(r["u"]) == u):

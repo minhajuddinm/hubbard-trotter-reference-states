@@ -1,6 +1,6 @@
 Lattice 2x4 (open): 16 qubits, sector dim 4900
 Host: Intel64 Family 6 Model 183 Stepping 1, GenuineIntel | Python 3.14.0
-  diagonalised T in 89.2 s, RSS nan MB
+  diagonalised T in 113.6 s, RSS nan MB
 
 U/t = 1.0: E0 = -8.632800, gap = 0.6219, g* = 0.82
   c_exact = +2.99121e-01; bound step ratio 4.13, ||E|| step ratio 3.98
@@ -9,9 +9,10 @@ U/t = 1.0: E0 = -8.632800, gap = 0.6219, g* = 0.82
   exact_gs       1.0000   +0.2991   +0.2991   +0.2991   +0.2991   0.0000 0
   free_fermion   0.9512   -0.2974   +0.2980   +0.0003   +0.1491   0.1488 0
   gutzwiller     0.9871   +0.4232   +0.2951   +0.3591   +0.3271   0.0320 1
+  uhf            0.9511   -0.2980   +0.2980   -0.0000   +0.1490   0.1490 0
   neel           0.0104   +3.3333   -0.0000   +1.6667   +0.8333   0.8333 1
   random_s7      0.0001   -0.0242   +0.0030   -0.0106   -0.0038   0.0068 0
-  exact 21.0 s, PennyLane 0.02 s (consistent: True), U step 111.1 s, RSS nan MB
+  exact 27.9 s, PennyLane 0.03 s (consistent: True), U step 143.2 s, RSS nan MB
 
 U/t = 2.0: E0 = -7.117447, gap = 0.4886, g* = 0.68
   c_exact = +1.20409e+00; bound step ratio 3.01, ||E|| step ratio 2.82
@@ -20,9 +21,10 @@ U/t = 2.0: E0 = -7.117447, gap = 0.4886, g* = 0.68
   exact_gs       1.0000   +1.2041   +1.2041   +1.2041   +1.2041   0.0000 0
   free_fermion   0.8134   -1.1896   +1.1919   +0.0012   +0.5966   0.5954 0
   gutzwiller     0.9442   +1.5910   +1.1489   +1.3699   +1.2594   0.1105 1
+  uhf            0.5482   -0.5735   +1.1980   +0.3123   +0.7551   0.4429 0
   neel           0.0238   +6.6667   -0.0000   +3.3333   +1.6667   1.6667 1
   random_s7      0.0001   -0.0543   +0.0120   -0.0212   -0.0046   0.0166 0
-  exact 20.6 s, PennyLane 0.03 s (consistent: True), U step 21.3 s, RSS nan MB
+  exact 32.0 s, PennyLane 0.03 s (consistent: True), U step 33.0 s, RSS nan MB
 
 U/t = 4.0: E0 = -5.012503, gap = 0.3238, g* = 0.46
   c_exact = +4.63129e+00; bound step ratio 2.32, ||E|| step ratio 2.06
@@ -31,9 +33,10 @@ U/t = 4.0: E0 = -5.012503, gap = 0.3238, g* = 0.46
   exact_gs       1.0000   +4.6312   +4.6312   +4.6312   +4.6312   0.0000 0
   free_fermion   0.4445   -4.7582   +4.7677   +0.0048   +2.3863   2.3815 1
   gutzwiller     0.7965   +6.1181   +4.0950   +5.1065   +4.6008   0.5058 1
+  uhf            0.2796   +1.5878   +4.3327   +2.9602   +3.6465   0.6862 0
   neel           0.0681  +13.3333   -0.0000   +6.6667   +3.3333   3.3333 1
   random_s7      0.0003   -0.1326   +0.0480   -0.0423   +0.0028   0.0451 0
-  exact 20.7 s, PennyLane 0.03 s (consistent: True), U step 21.3 s, RSS nan MB
+  exact 21.0 s, PennyLane 0.03 s (consistent: True), U step 22.0 s, RSS nan MB
 
 U/t = 8.0: E0 = -3.025923, gap = 0.2517, g* = 0.22
   c_exact = +1.40452e+01; bound step ratio 2.09, ||E|| step ratio 1.77
@@ -42,9 +45,10 @@ U/t = 8.0: E0 = -3.025923, gap = 0.2517, g* = 0.22
   exact_gs       1.0000  +14.0444  +14.0444  +14.0444  +14.0444   0.0000 0
   free_fermion   0.1452  -19.0328  +19.0710   +0.0191   +9.5450   9.5259 1
   gutzwiller     0.6866  +20.0591  +10.6326  +15.3459  +12.9892   2.3566 1
+  uhf            0.0223   +6.4794   +7.8750   +7.1772   +7.5261   0.3489 0
   neel           0.1216  +26.6667   -0.0000  +13.3333   +6.6667   6.6667 0
   random_s7      0.0003   -0.3612   +0.1918   -0.0847   +0.0536   0.1383 0
-  exact 20.7 s, PennyLane 0.02 s (consistent: True), U step 21.4 s, RSS nan MB
+  exact 21.2 s, PennyLane 0.03 s (consistent: True), U step 22.1 s, RSS nan MB
 
 qml.estimator T gates per step: 3872
 Saved D:\Minhaj\Papers\hubbard-trotter-reference-states\results\sweep_2x4.csv

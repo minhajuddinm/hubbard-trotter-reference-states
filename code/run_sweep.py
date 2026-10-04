@@ -36,6 +36,9 @@ from scipy.sparse.linalg import eigsh
 from common import (
     double_occupancy,
     gutzwiller_state,
+    one_body_hopping,
+    slater_state,
+    uhf_orbitals,
     check_block_diagonal,
     hubbard_parts,
     neel_state,
@@ -153,7 +156,12 @@ def main():
 
         psi_free = lowest(csr_array(t_sparse + 1e-3 * v_op), k=1)[1][:, 0]
         psi_gw, g_opt, _ = gutzwiller_state(psi_free, d_occ, h_sp, np.linspace(0.02, 1.0, 50))
-        states = {"exact_gs": psi0, "free_fermion": psi_free, "gutzwiller": psi_gw,
+        orb_a, orb_b, e_hf, hf_conv = uhf_orbitals(one_body_hopping(T, n_sites), u,
+                                                   n_sites // 2, n_sites - n_sites // 2)
+        if not hf_conv:
+            raise RuntimeError(f"UHF did not converge at U/t = {u}")
+        psi_hf = slater_state(orb_a, orb_b, idx, n_sites)
+        states = {"exact_gs": psi0, "free_fermion": psi_free, "gutzwiller": psi_gw, "uhf": psi_hf,
                   "neel": neel_state(lattice, idx, n_qubits), "random_s7": random_state(len(idx), 7)}
 
         tv = t_sparse @ v_op - v_op @ t_sparse            # [T,V]

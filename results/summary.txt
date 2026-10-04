@@ -5,4 +5,6 @@ commutator bound step ratio range: 2.06 to 4.13
 free_fermion: max |err| standard 2.691, c_half 0.505, formA 0.695, formB 0.999, in interval 8/12
 neel: max |err| standard 10.144, c_half 1.786, formA 1.000, formB 4.572, in interval 9/12
 gutzwiller: max |err| standard 0.428, c_half 0.094, formA 0.243, formB 0.201, in interval 10/12
-log-log correlation of |r|/48 with |c_half error| over 36 cases: 0.86
+uhf: max |err| standard 1.998, c_half 0.590, formA 0.576, formB 1.000, in interval 0/12
+log-log correlation of |r|/48 with |c_half error|, without UHF (36 cases): 0.86
+log-log correlation of |r|/48 with |c_half error|, all four (48 cases): 0.68

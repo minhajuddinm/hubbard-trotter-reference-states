@@ -188,3 +188,66 @@ def gutzwiller_state(psi_free, d_occ, h_mat, grid):
         if best is None or e < best[0]:
             best = (e, g, p)
     return best[2], best[1], best[0]
+
+
+# ---------------------------------------------------------------------------
+# Unrestricted Hartree-Fock reference state
+# ---------------------------------------------------------------------------
+def one_body_hopping(T, n_sites):
+    """Single-particle hopping matrix h1[s, s'] read from the PennyLane operator T.
+
+    In the one-electron sector the Jordan-Wigner strings act on empty wires, so the
+    matrix element between spin-up modes 2s and 2s' equals h1[s, s'].
+    """
+    nq = 2 * n_sites
+    m = T.sparse_matrix(wire_order=range(nq)).tocsr()
+    k = [1 << (nq - 1 - 2 * s) for s in range(n_sites)]
+    return np.real(m[k][:, k].toarray())
+
+
+def uhf_orbitals(h1, u, n_up, n_down, bias=0.3, tol=1e-11, max_iter=5000, mix=0.5):
+    """Collinear unrestricted Hartree-Fock for the Hubbard model.
+
+    Starts from an antiferromagnetic density guess (and from a uniform one) and returns the
+    solution with the lower mean-field energy: (occupied up orbitals, occupied down orbitals,
+    energy, converged).
+    """
+    n = h1.shape[0]
+    sign = np.array([(-1) ** s for s in range(n)], dtype=float)
+    best = None
+    for b in (bias, 1e-3):
+        n_a = n_up / n + b * sign
+        n_b = n_down / n - b * sign
+        conv = False
+        for _ in range(max_iter):
+            ea, ca = np.linalg.eigh(h1 + u * np.diag(n_b))
+            eb, cb = np.linalg.eigh(h1 + u * np.diag(n_a))
+            new_a = np.sum(ca[:, :n_up] ** 2, axis=1)
+            new_b = np.sum(cb[:, :n_down] ** 2, axis=1)
+            diff = max(np.abs(new_a - n_a).max(), np.abs(new_b - n_b).max())
+            n_a = mix * new_a + (1 - mix) * n_a
+            n_b = mix * new_b + (1 - mix) * n_b
+            if diff < tol:
+                conv = True
+                break
+        energy = ea[:n_up].sum() + eb[:n_down].sum() - u * np.dot(n_a, n_b)
+        if best is None or energy < best[2] - 1e-12:
+            best = (ca[:, :n_up], cb[:, :n_down], energy, conv)
+    return best
+
+
+def slater_state(orb_up, orb_down, idx, n_sites):
+    """Amplitudes of the determinant prod_a c+_{phi_a} |0> on the sector basis idx.
+
+    Modes are ordered by wire (2s up, 2s+1 down), matching PennyLane's Jordan-Wigner
+    convention, so the amplitude of an occupation pattern is det(M[occupied wires, :]).
+    """
+    nq = 2 * n_sites
+    m = np.zeros((nq, orb_up.shape[1] + orb_down.shape[1]))
+    m[0::2, :orb_up.shape[1]] = orb_up
+    m[1::2, orb_up.shape[1]:] = orb_down
+    psi = np.empty(len(idx))
+    for i, k in enumerate(idx):
+        occ = [w for w in range(nq) if (k >> (nq - 1 - w)) & 1]
+        psi[i] = np.linalg.det(m[occ, :])
+    return psi.astype(complex)
